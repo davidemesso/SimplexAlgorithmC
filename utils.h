@@ -3,8 +3,8 @@
 
 typedef enum Option
 {
-    OPT_MAXIMIZE,
-    OPT_MINIMIZE
+    OPT_MAXIMIZE = 0,
+    OPT_MINIMIZE = 1
 } Option;
 
 #endif // UTILS_H_

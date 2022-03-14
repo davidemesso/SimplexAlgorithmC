@@ -18,8 +18,10 @@ Simplex smp_crateFromFile(const char *file_name)
     FILE *file = fopen(file_name, "r");
 
     int rows, cols;
+    Option opt;
     fscanf(file, "%d", &rows);
     fscanf(file, "%d", &cols);
+    fscanf(file, "%d", (int*)&opt);
 
     // ALLOCATION
     Tableau tableau = (Tableau)malloc(rows * sizeof(Fraction *));
@@ -42,7 +44,7 @@ Simplex smp_crateFromFile(const char *file_name)
     }
     fclose(file);
 
-    Simplex simplex = {tableau, rows, cols};
+    Simplex simplex = {tableau, rows, cols, opt};
     return simplex;
 }
 
@@ -63,7 +65,7 @@ void smp_printReduced(Simplex simplex)
 }
 
 /** Maximize the objective function of the given simplex */
-void smp_optimize(Simplex *simplex, Option opt)
+void smp_optimize(Simplex *simplex)
 {
     /** SIMPLEX ALGORITHM
      * 1. select column with first positive/negative (max/min) in first row
@@ -76,7 +78,7 @@ void smp_optimize(Simplex *simplex, Option opt)
     while (pivotCol != -1) // Step 4
     {
         // Step 1
-        pivotCol = smp_getPivotCol(*simplex, opt);
+        pivotCol = smp_getPivotCol(*simplex);
 
         if(pivotCol != -1)
         {
@@ -94,14 +96,15 @@ void smp_optimize(Simplex *simplex, Option opt)
  * select column with first positive/negative (max/min) in first row
  * -1 means the algorithm is finished, cant optimize anymore
  **/
-int smp_getPivotCol(Simplex simplex, Option opt)
+int smp_getPivotCol(Simplex simplex)
 {
     Fraction *f = simplex.tableau[0];
+    
     for (int i = 0; i < simplex.colCount-1; i++)
     {
-        if (opt == OPT_MAXIMIZE && f[i].num > 0)
+        if (simplex.opt == OPT_MAXIMIZE && f[i].num > 0)
             return i;
-        if (opt == OPT_MINIMIZE && f[i].num < 0)
+        if (simplex.opt == OPT_MINIMIZE && f[i].num < 0)
             return i;
     }
     return -1;

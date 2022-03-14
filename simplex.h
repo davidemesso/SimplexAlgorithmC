@@ -13,12 +13,13 @@ typedef struct Simplex
     Tableau tableau;
     int rowCount;
     int colCount;
+    Option opt;
 } Simplex;
 
 Simplex smp_crateFromFile(const char *file_name);
 void smp_printReduced(Simplex simplex);
-void smp_optimize(Simplex* simplex, Option opt);
-int smp_getPivotCol(Simplex simplex, Option opt);
+void smp_optimize(Simplex* simplex);
+int smp_getPivotCol(Simplex simplex);
 int smp_getPivotRow(Simplex simplex, int pivotCol);
 void smp_pivotTransform(Simplex* simplex, int pivotRow, int pivotCol);
 void smp_printSolution(Simplex simplex);
