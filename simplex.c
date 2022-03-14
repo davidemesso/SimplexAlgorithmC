@@ -171,7 +171,7 @@ void smp_printSolution(Simplex simplex)
     frc_print(z);
 
     printf("\n( ");
-    for (int j = 0; j < simplex.colCount; j++)
+    for (int j = 0; j < simplex.colCount-1; j++)
     {
         if (simplex.tableau[0][j].num != 0)
             printf("0 ");

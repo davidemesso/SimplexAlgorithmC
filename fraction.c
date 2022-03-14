@@ -41,7 +41,6 @@ Fraction frc_prod(Fraction a, Fraction b)
 Fraction frc_sum(Fraction a, Fraction b)
 {
     const int lcm = frc_lcm(a,b);
-
     Fraction f = {(a.num * lcm/a.den) + (b.num * lcm/b.den), lcm};
     frc_simplify(&f);
 
@@ -62,6 +61,12 @@ void frc_simplify(Fraction *f)
     int gcdValue = frc_gcd(*f);
     f->num = f->num / gcdValue;
     f->den = f->den / gcdValue;
+
+    if(f->den < 0)
+    {
+        f->den = -f->den;
+        f->num = -f->num;
+    }
 }
 
 /** Prints the fraction formatted

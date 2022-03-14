@@ -8,7 +8,7 @@ int main(int argc, const char *argv[])
     smp_printReduced(simplex);
 
     // Resolve
-    smp_optimize(&simplex, OPT_MAXIMIZE);
+    smp_optimize(&simplex, OPT_MINIMIZE);
     smp_printReduced(simplex);
     smp_printSolution(simplex);
 }
